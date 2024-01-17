@@ -100,7 +100,13 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  ch = getchar();
+	  if (ch=='\r') {
+		  printf("\n\r");
+	  }
+	  else {
+		  putchar(ch);
+	  }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
