@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include <retarget.h>
 #include <stdio.h>
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,10 +98,39 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   printf("System Up and Running\n\r");
+  char ch;
+  char buffer[1024];
+  int index = 0;
+  const char *led_on = "LON";
+  const char *led_off = "LOF";
+
   while (1)
   {
     /* USER CODE END WHILE */
+	  ch = getchar();
+	  if (ch=='\r' || ch == '\n') {
+		  buffer[index] = '\0';
+		  printf("\n\r");
+		  if (strstr(buffer,led_on) != NULL) {
+			  printf("led_on\n\r");
+			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
+		  }
+		  else if (strstr(buffer,led_off) != NULL) {
+			  printf("led_off\n\r");
+			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
+		  }
+		  else {
+			  printf("invalid_command");
+		  }
 
+		  memset(buffer, 0, sizeof(buffer));
+		  index = 0;
+	  }
+	  else {
+		  buffer[index] = ch;
+		  index++;
+		  putchar(ch);
+	  }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
