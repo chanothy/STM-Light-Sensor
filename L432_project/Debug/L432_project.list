@@ -7,23 +7,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00003e68  08000190  08000190  00010190  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       0000008c  08003ff8  08003ff8  00013ff8  2**2
+  2 .rodata       00000094  08003ff8  08003ff8  00013ff8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08004084  08004084  00020068  2**0
+  3 .ARM.extab    00000000  0800408c  0800408c  00020068  2**0
                   CONTENTS
-  4 .ARM          00000008  08004084  08004084  00014084  2**2
+  4 .ARM          00000008  0800408c  0800408c  0001408c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  0800408c  0800408c  00020068  2**0
+  5 .preinit_array 00000000  08004094  08004094  00020068  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  0800408c  0800408c  0001408c  2**2
+  6 .init_array   00000004  08004094  08004094  00014094  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08004090  08004090  00014090  2**2
+  7 .fini_array   00000004  08004098  08004098  00014098  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000068  20000000  08004094  00020000  2**2
+  8 .data         00000068  20000000  0800409c  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          000001fc  20000068  080040fc  00020068  2**2
+  9 .bss          000001fc  20000068  08004104  00020068  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  20000264  080040fc  00020264  2**0
+ 10 ._user_heap_stack 00000604  20000264  08004104  00020264  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00020068  2**0
                   CONTENTS, READONLY
@@ -448,13 +448,13 @@ int main(void)
  8000580:	4803      	ldr	r0, [pc, #12]	; (8000590 <main+0x24>)
  8000582:	f000 f8eb 	bl	800075c <RetargetInit>
 
-  printf("\n\rHello World\n\r");
- 8000586:	4803      	ldr	r0, [pc, #12]	; (8000594 <main+0x28>)
- 8000588:	f002 fdfe 	bl	8003188 <iprintf>
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  printf("System Up and Running\n\r");
+ 8000586:	4803      	ldr	r0, [pc, #12]	; (8000594 <main+0x28>)
+ 8000588:	f002 fdfe 	bl	8003188 <iprintf>
   while (1)
  800058c:	e7fe      	b.n	800058c <main+0x20>
  800058e:	bf00      	nop
@@ -1607,7 +1607,7 @@ LoopForever:
   ldr r1, =_edata
  8000b28:	20000068 	.word	0x20000068
   ldr r2, =_sidata
- 8000b2c:	08004094 	.word	0x08004094
+ 8000b2c:	0800409c 	.word	0x0800409c
   ldr r2, =_sbss
  8000b30:	20000068 	.word	0x20000068
   ldr r4, =_ebss
@@ -3213,7 +3213,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
  8001448:	6013      	str	r3, [r2, #0]
  800144a:	e013      	b.n	8001474 <HAL_RCC_OscConfig+0x298>
  800144c:	40021000 	.word	0x40021000
- 8001450:	08004008 	.word	0x08004008
+ 8001450:	08004010 	.word	0x08004010
  8001454:	20000000 	.word	0x20000000
  8001458:	20000004 	.word	0x20000004
  800145c:	4ba0      	ldr	r3, [pc, #640]	; (80016e0 <HAL_RCC_OscConfig+0x504>)
@@ -4603,7 +4603,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  8001bee:	bd80      	pop	{r7, pc}
  8001bf0:	40022000 	.word	0x40022000
  8001bf4:	40021000 	.word	0x40021000
- 8001bf8:	08004008 	.word	0x08004008
+ 8001bf8:	08004010 	.word	0x08004010
  8001bfc:	20000000 	.word	0x20000000
  8001c00:	20000004 	.word	0x20000004
 
@@ -4808,7 +4808,7 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  8001d08:	4770      	bx	lr
  8001d0a:	bf00      	nop
  8001d0c:	40021000 	.word	0x40021000
- 8001d10:	08004020 	.word	0x08004020
+ 8001d10:	08004028 	.word	0x08004028
  8001d14:	00f42400 	.word	0x00f42400
  8001d18:	007a1200 	.word	0x007a1200
 
@@ -4857,7 +4857,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  8001d54:	4618      	mov	r0, r3
  8001d56:	bd80      	pop	{r7, pc}
  8001d58:	40021000 	.word	0x40021000
- 8001d5c:	08004018 	.word	0x08004018
+ 8001d5c:	08004020 	.word	0x08004020
 
 08001d60 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -4884,7 +4884,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8001d80:	4618      	mov	r0, r3
  8001d82:	bd80      	pop	{r7, pc}
  8001d84:	40021000 	.word	0x40021000
- 8001d88:	08004018 	.word	0x08004018
+ 8001d88:	08004020 	.word	0x08004020
 
 08001d8c <RCC_SetFlashLatencyFromMSIRange>:
             voltage range.
@@ -8598,10 +8598,10 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800346a:	4798      	blx	r3
  800346c:	3601      	adds	r6, #1
  800346e:	e7f2      	b.n	8003456 <__libc_init_array+0x1e>
- 8003470:	0800408c 	.word	0x0800408c
- 8003474:	0800408c 	.word	0x0800408c
- 8003478:	0800408c 	.word	0x0800408c
- 800347c:	08004090 	.word	0x08004090
+ 8003470:	08004094 	.word	0x08004094
+ 8003474:	08004094 	.word	0x08004094
+ 8003478:	08004094 	.word	0x08004094
+ 800347c:	08004098 	.word	0x08004098
 
 08003480 <__retarget_lock_init_recursive>:
  8003480:	4770      	bx	lr
@@ -9110,11 +9110,11 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  80038f4:	4630      	mov	r0, r6
  80038f6:	f000 f879 	bl	80039ec <_printf_i>
  80038fa:	e7e4      	b.n	80038c6 <_vfiprintf_r+0x1ea>
- 80038fc:	08004050 	.word	0x08004050
- 8003900:	0800405a 	.word	0x0800405a
+ 80038fc:	08004058 	.word	0x08004058
+ 8003900:	08004062 	.word	0x08004062
  8003904:	00000000 	.word	0x00000000
  8003908:	080036b7 	.word	0x080036b7
- 800390c:	08004056 	.word	0x08004056
+ 800390c:	0800405e 	.word	0x0800405e
 
 08003910 <_printf_common>:
  8003910:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -9447,8 +9447,8 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  8003c20:	f104 0619 	add.w	r6, r4, #25
  8003c24:	e7f5      	b.n	8003c12 <_printf_i+0x226>
  8003c26:	bf00      	nop
- 8003c28:	08004061 	.word	0x08004061
- 8003c2c:	08004072 	.word	0x08004072
+ 8003c28:	08004069 	.word	0x08004069
+ 8003c2c:	0800407a 	.word	0x0800407a
 
 08003c30 <__sflush_r>:
  8003c30:	898a      	ldrh	r2, [r1, #12]

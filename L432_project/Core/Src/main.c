@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "retarget.h"
+#include <retarget.h>
 #include <stdio.h>
 /* USER CODE END Includes */
 
@@ -92,21 +92,15 @@ int main(void)
   /* USER CODE BEGIN 2 */
   RetargetInit(&huart2);
 
-  printf("\n\rHello World\n\r");
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  printf("System Up and Running\n\r");
   while (1)
   {
     /* USER CODE END WHILE */
-	  ch = getchar();
-	  if (ch=='\r') {
-		  printf("\n\r");
-	  }
-	  else {
-		  putchar(ch);
-	  }
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
