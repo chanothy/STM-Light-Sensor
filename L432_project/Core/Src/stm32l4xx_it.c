@@ -23,6 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include <string.h>
+#include <ringbuffer.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -210,12 +212,16 @@ void USART2_IRQHandler(void)
   HAL_UART_IRQHandler(&huart2);
   /* USER CODE BEGIN USART2_IRQn 1 */
   char ch;
+  extern RingBuffer rb;
   char buffer[1024];
   int index = 0;
   const char *led_on = "LON";
   const char *led_off = "LOF";
   ch = getchar();
   if (ch=='\r' || ch == '\n') {
+	  printf("\r\nRing Buffer: ");
+	  printf(buffer);
+	  printf("\n");
 	  buffer[index] = '\0';
 	  printf("\n\r");
 	  if (strstr(buffer,led_on) != NULL) {
@@ -227,7 +233,7 @@ void USART2_IRQHandler(void)
 		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
 	  }
 	  else {
-		  printf("invalid_command");
+		  printf("invalid_command\n\r");
 	  }
 
 	  memset(buffer, 0, sizeof(buffer));
@@ -235,6 +241,7 @@ void USART2_IRQHandler(void)
   }
   else {
 	  buffer[index] = ch;
+	  RingBuffer_Write(&rb,(uint8_t *)&ch, 1);
 	  index++;
 	  putchar(ch);
   }
