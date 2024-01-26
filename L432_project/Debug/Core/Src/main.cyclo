@@ -1,6 +1,6 @@
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_usart.h:3672:22:LL_USART_EnableIT_RXNE	2
-../Core/Src/main.c:69:5:main	5
-../Core/Src/main.c:147:6:SystemClock_Config	4
-../Core/Src/main.c:208:13:MX_USART2_UART_Init	2
-../Core/Src/main.c:243:13:MX_GPIO_Init	1
-../Core/Src/main.c:276:6:Error_Handler	1
+../Core/Src/main.c:69:5:main	1
+../Core/Src/main.c:119:6:SystemClock_Config	4
+../Core/Src/main.c:180:13:MX_USART2_UART_Init	2
+../Core/Src/main.c:215:13:MX_GPIO_Init	1
+../Core/Src/main.c:248:6:Error_Handler	1
