@@ -24,6 +24,7 @@
 #include <retarget.h>
 #include <stdio.h>
 #include <string.h>
+#include <stm32l4xx_ll_usart.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,8 +91,10 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
+
   /* USER CODE BEGIN 2 */
   RetargetInit(&huart2);
+  LL_USART_EnableIT_RXNE(USART2);    // Turn on the usart2 interrupt
 
   /* USER CODE END 2 */
 
@@ -106,31 +109,32 @@ int main(void)
 
   while (1)
   {
-    /* USER CODE END WHILE */
 	  ch = getchar();
-	  if (ch=='\r' || ch == '\n') {
-		  buffer[index] = '\0';
-		  printf("\n\r");
-		  if (strstr(buffer,led_on) != NULL) {
-			  printf("led_on\n\r");
-			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
-		  }
-		  else if (strstr(buffer,led_off) != NULL) {
-			  printf("led_off\n\r");
-			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
-		  }
-		  else {
-			  printf("invalid_command");
-		  }
+	  	  if (ch=='\r' || ch == '\n') {
+	  		  buffer[index] = '\0';
+	  		  printf("\n\r");
+	  		  if (strstr(buffer,led_on) != NULL) {
+	  			  printf("led_on\n\r");
+	  			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
+	  		  }
+	  		  else if (strstr(buffer,led_off) != NULL) {
+	  			  printf("led_off\n\r");
+	  			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
+	  		  }
+	  		  else {
+	  			  printf("invalid_command");
+	  		  }
 
-		  memset(buffer, 0, sizeof(buffer));
-		  index = 0;
-	  }
-	  else {
-		  buffer[index] = ch;
-		  index++;
-		  putchar(ch);
-	  }
+	  		  memset(buffer, 0, sizeof(buffer));
+	  		  index = 0;
+	  	  }
+	  	  else {
+	  		  buffer[index] = ch;
+	  		  index++;
+	  		  putchar(ch);
+	  	  }
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

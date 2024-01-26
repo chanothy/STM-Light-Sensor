@@ -60,8 +60,8 @@ all: main-build
 main-build: L432_project.elf secondary-outputs
 
 # Tool invocations
-L432_project.elf L432_project.map: $(OBJS) $(USER_OBJS) C:\Users\timch\Desktop\My\ Repositories\ES-SPRING-2024\L432_project\STM32L432KCUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "L432_project.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\timch\Desktop\My Repositories\ES-SPRING-2024\L432_project\STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="L432_project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+L432_project.elf L432_project.map: $(OBJS) $(USER_OBJS) /Users/selinazheng/Desktop/ES-SPRING-2024/L432_project/STM32L432KCUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "L432_project.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/selinazheng/Desktop/ES-SPRING-2024/L432_project/STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="L432_project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
