@@ -213,17 +213,28 @@ void USART2_IRQHandler(void)
   /* USER CODE BEGIN USART2_IRQn 1 */
   char ch;
   extern RingBuffer rb;
+
+  uint8_t data;
+
   char buffer[1024];
   int index = 0;
   const char *led_on = "LON";
   const char *led_off = "LOF";
+
   ch = getchar();
   if (ch=='\r' || ch == '\n') {
+	  uint16_t len = RingBuffer_GetDataLength(&rb);
 	  printf("\r\nRing Buffer: ");
-	  printf(buffer);
-	  printf("\n");
-	  buffer[index] = '\0';
+	  for (uint16_t i= 0; i < len; i++) {
+		  if (RingBuffer_Read(&rb, &data, 1) == 1) {
+			  printf("%c", data);
+			  buffer[index] = data;
+			  index++;
+		  }
+	  }
+
 	  printf("\n\r");
+
 	  if (strstr(buffer,led_on) != NULL) {
 		  printf("led_on\n\r");
 		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
@@ -240,9 +251,9 @@ void USART2_IRQHandler(void)
 	  index = 0;
   }
   else {
-	  buffer[index] = ch;
+//	  buffer[index] = ch;
 	  RingBuffer_Write(&rb,(uint8_t *)&ch, 1);
-	  index++;
+//	  index++;
 	  putchar(ch);
   }
   /* USER CODE END USART2_IRQn 1 */
