@@ -24,7 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <string.h>
-#include <ringbuffer.h>
+#include <queue.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -211,50 +211,47 @@ void USART2_IRQHandler(void)
   /* USER CODE END USART2_IRQn 0 */
   HAL_UART_IRQHandler(&huart2);
   /* USER CODE BEGIN USART2_IRQn 1 */
-  char ch;
-  extern RingBuffer rb;
+  extern queue_t buf;
+  extern uint8_t command[16];
+  static uint32_t counter = 0;
 
+  char ch;
   uint8_t data;
 
-  char buffer[1024];
-  int index = 0;
   const char *led_on = "LON";
   const char *led_off = "LOF";
 
   ch = getchar();
+
   if (ch=='\r' || ch == '\n') {
-	  uint16_t len = RingBuffer_GetDataLength(&rb);
-	  printf("\r\nRing Buffer: ");
-	  for (uint16_t i= 0; i < len; i++) {
-		  if (RingBuffer_Read(&rb, &data, 1) == 1) {
-			  printf("%c", data);
-			  buffer[index] = data;
-			  index++;
-		  }
+	  printf("\r\nHead / Tail: %d %d\n\r",head(&buf),tail(&buf)); //print where the ptrs are
+	  data = dequeue(&buf);
+	  while (data!=0) {
+		  command[counter] = data;
+		  counter++;
+		  data = dequeue(&buf);
 	  }
+	  char command_str[17]; // Assuming command has a maximum length of 16 bytes
+	  snprintf(command_str, sizeof(command_str), "%s", command); //turns command into str
+	  printf("Command String: %s\n\r", command_str);
 
-	  printf("\n\r");
-
-	  if (strstr(buffer,led_on) != NULL) {
+	  if (strstr(command_str,led_on) != NULL) {
 		  printf("led_on\n\r");
 		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
 	  }
-	  else if (strstr(buffer,led_off) != NULL) {
+	  else if (strstr(command_str,led_off) != NULL) {
 		  printf("led_off\n\r");
 		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
 	  }
 	  else {
 		  printf("invalid_command\n\r");
 	  }
-
-	  memset(buffer, 0, sizeof(buffer));
-	  index = 0;
+	  memset(command, 0, sizeof(command));
+	  counter = 0;
   }
   else {
-//	  buffer[index] = ch;
-	  RingBuffer_Write(&rb,(uint8_t *)&ch, 1);
-//	  index++;
 	  putchar(ch);
+	  enqueue(&buf,ch);
   }
   /* USER CODE END USART2_IRQn 1 */
 }

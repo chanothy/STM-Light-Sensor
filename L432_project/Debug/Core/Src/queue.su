@@ -1,0 +1,6 @@
+../Core/Src/queue.c:51:6:init_queue	24	static
+../Core/Src/queue.c:59:5:enqueue	24	static
+../Core/Src/queue.c:75:9:dequeue	24	static
+../Core/Src/queue.c:87:5:queue_empty	24	static
+../Core/Src/queue.c:98:5:head	24	static
+../Core/Src/queue.c:104:5:tail	24	static

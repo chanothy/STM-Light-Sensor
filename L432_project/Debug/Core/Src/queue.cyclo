@@ -1,0 +1,6 @@
+../Core/Src/queue.c:51:6:init_queue	1
+../Core/Src/queue.c:59:5:enqueue	2
+../Core/Src/queue.c:75:9:dequeue	2
+../Core/Src/queue.c:87:5:queue_empty	2
+../Core/Src/queue.c:98:5:head	1
+../Core/Src/queue.c:104:5:tail	1

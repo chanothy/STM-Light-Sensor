@@ -1,0 +1,3 @@
+../Core/Src/interrupt.c:15:10:disable	1
+../Core/Src/interrupt.c:22:6:restore	1
+../Core/Src/interrupt.c:26:6:enable	1

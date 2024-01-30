@@ -95,5 +95,16 @@ int queue_empty(queue_t *buf) {
   return (retval);
 }
 
+int head(queue_t *buf) { // checks where the head pointer is
+	int res = -1;
+	res = buf->head;
+	return (res);
+}
+
+int tail(queue_t *buf) { // checks where the head pointer is
+	int res = -1;
+	res = buf->tail;
+	return (res);
+}
 
 /* queue.c ends here */
