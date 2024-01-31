@@ -107,6 +107,7 @@ int main(void)
   printf("System Up and Running\n\r");
   static uint32_t counter = 0;
 
+  uint8_t data;
 
   while (1)
   {
@@ -119,7 +120,6 @@ int main(void)
 		  counter++;
 		  data = dequeue(&buf);
 	  }
-	  get_commmand(command);
   }
   /* USER CODE END 3 */
 }

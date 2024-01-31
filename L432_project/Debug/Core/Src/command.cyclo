@@ -1,0 +1,6 @@
+../Core/Src/command.c:8:6:prompt	1
+../Core/Src/command.c:12:6:get_command	4
+../Core/Src/command.c:51:6:help_command	1
+../Core/Src/command.c:59:6:lof_command	1
+../Core/Src/command.c:63:6:lon_command	1
+../Core/Src/command.c:67:6:test_command	1
