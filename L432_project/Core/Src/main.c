@@ -26,6 +26,7 @@
 #include <string.h>
 #include <stm32l4xx_ll_usart.h>
 #include <queue.h>
+#include <command.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -104,12 +105,21 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   printf("System Up and Running\n\r");
+  static uint32_t counter = 0;
+
 
   while (1)
   {
 
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
+	  data = dequeue(&buf);
+	  while (data!=0) {
+		  command[counter] = data;
+		  counter++;
+		  data = dequeue(&buf);
+	  }
+	  get_commmand(command);
   }
   /* USER CODE END 3 */
 }
