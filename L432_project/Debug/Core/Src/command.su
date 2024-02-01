@@ -1,6 +1,6 @@
 ../Core/Src/command.c:8:6:prompt	8	static
-../Core/Src/command.c:12:6:get_command	56	static
-../Core/Src/command.c:51:6:help_command	8	static
-../Core/Src/command.c:59:6:lof_command	4	static
-../Core/Src/command.c:63:6:lon_command	4	static
-../Core/Src/command.c:67:6:test_command	16	static
+../Core/Src/command.c:11:6:help_command	8	static
+../Core/Src/command.c:19:6:test_command	16	static
+../Core/Src/command.c:22:6:lof_command	8	static
+../Core/Src/command.c:27:6:lon_command	8	static
+../Core/Src/command.c:31:6:get_command	32	static

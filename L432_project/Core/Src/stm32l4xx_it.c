@@ -216,14 +216,6 @@ void USART2_IRQHandler(void)
   ch = getchar();
   putchar(ch);
   enqueue(&buf,ch);
-
-//  if (ch=='\r' || ch == '\n') {
-//	  get_command();
-//  }
-//  else {
-//	  putchar(ch);
-//	  enqueue(&buf,ch);
-//  }
   /* USER CODE END USART2_IRQn 1 */
 }
 

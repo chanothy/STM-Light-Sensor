@@ -73,7 +73,7 @@ static void MX_USART2_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	init_queue(&buf);
+  init_queue(&buf);
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -106,20 +106,25 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   printf("System Up and Running\n\r");
   static uint32_t counter = 0;
-
   uint8_t data;
-
+  prompt();
   while (1)
   {
-
-    /* USER CODE END WHILE */
-    /* USER CODE BEGIN 3 */
 	  data = dequeue(&buf);
 	  while (data!=0) {
+		  if (data=='\n'||data=='\r') {
+			  get_command(command);
+			  memset(command, 0, sizeof(command));
+			  counter = 0;
+		  }
 		  command[counter] = data;
 		  counter++;
+		  command[counter] = '\0';
 		  data = dequeue(&buf);
 	  }
+    /* USER CODE END WHILE */
+    /* USER CODE BEGIN 3 */
+
   }
   /* USER CODE END 3 */
 }
