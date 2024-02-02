@@ -9,6 +9,7 @@
 void help_command(char *);
 void lof_command(char *);
 void lon_command(char *);
+void test_command(char *);
 
 void prompt() {
 	printf("> ");
@@ -25,6 +26,7 @@ command_t commands[] = {
 	{"help",help_command},
 	{"lon",lon_command},
 	{"lof",lof_command},
+	{"test",test_command},
 	{0,0}
 };
 
@@ -49,6 +51,15 @@ void __attribute__((weak)) lon_command(char *arguments) {
 
 void __attribute__((weak)) test_command(char *arguments) {
 	printf("test_command\n\r");
+	if (arguments) {
+		char *pt;
+		pt = strtok (arguments,",");
+		while (pt != NULL) {
+			char a = *pt;
+			printf("%c\n\r", a);
+			pt = strtok (NULL, ",");
+		}
+	}
 }
 
 
