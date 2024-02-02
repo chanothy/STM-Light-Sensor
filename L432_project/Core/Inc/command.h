@@ -4,8 +4,9 @@ typedef struct command {
 } command_t;
 
 void prompt();
-void get_command();
-void help_command();
+int get_commands();
+int execute_command();
+int parse_command();
 void lof_command();
 void lon_command();
 void test_command();
