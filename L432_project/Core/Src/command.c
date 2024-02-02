@@ -55,8 +55,8 @@ void __attribute__((weak)) test_command(char *arguments) {
 		char *pt;
 		pt = strtok (arguments,",");
 		while (pt != NULL) {
-			char a = *pt;
-			printf("%c\n\r", a);
+//			char a = *pt;
+			printf("%s\n\r", pt);
 			pt = strtok (NULL, ",");
 		}
 	}
