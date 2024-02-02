@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <queue.h>
+#include <command.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +45,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern queue_t buf;
+char ch;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -211,47 +213,10 @@ void USART2_IRQHandler(void)
   /* USER CODE END USART2_IRQn 0 */
   HAL_UART_IRQHandler(&huart2);
   /* USER CODE BEGIN USART2_IRQn 1 */
-  extern queue_t buf;
-  extern uint8_t command[16];
-  static uint32_t counter = 0;
-
-  char ch;
-  uint8_t data;
-
-  const char *led_on = "LON";
-  const char *led_off = "LOF";
-
   ch = getchar();
-
-  if (ch=='\r' || ch == '\n') {
-	  printf("\r\nHead / Tail: %d %d\n\r",head(&buf),tail(&buf)); //print where the ptrs are
-	  data = dequeue(&buf);
-	  while (data!=0) {
-		  command[counter] = data;
-		  counter++;
-		  data = dequeue(&buf);
-	  }
-	  char command_str[17]; // Assuming command has a maximum length of 16 bytes
-	  snprintf(command_str, sizeof(command_str), "%s", command); //turns command into str
-	  printf("Command String: %s\n\r", command_str);
-
-	  if (strstr(command_str,led_on) != NULL) {
-		  printf("led_on\n\r");
-		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
-	  }
-	  else if (strstr(command_str,led_off) != NULL) {
-		  printf("led_off\n\r");
-		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
-	  }
-	  else {
-		  printf("invalid_command\n\r");
-	  }
-	  memset(command, 0, sizeof(command));
-	  counter = 0;
-  }
-  else {
-	  putchar(ch);
-	  enqueue(&buf,ch);
+  if (enqueue(&buf,ch)) {
+	  dequeue(&buf);
+      enqueue(&buf,ch);
   }
   /* USER CODE END USART2_IRQn 1 */
 }

@@ -26,6 +26,7 @@
 #include <string.h>
 #include <stm32l4xx_ll_usart.h>
 #include <queue.h>
+#include <command.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,7 +50,7 @@ UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
 queue_t buf;
 uint8_t command[16]; // idk how big to make this
-
+int command_length;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -72,7 +73,7 @@ static void MX_USART2_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	init_queue(&buf);
+  init_queue(&buf);
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -104,12 +105,43 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   printf("System Up and Running\n\r");
-
+  static uint32_t counter = 0;
+  uint8_t data;
+  prompt();
   while (1)
   {
+//	  data = dequeue(&buf);
+//	  while (data!=0) {
+//		  if (get_command_2(command)) {
+//			  get_command(command);
+//			  memset(command, 0, sizeof(command));
+//			  counter = 0;
+//		  }
+//		  command[counter] = data;
+//		  counter++;
+//		  command[counter] = '\0';
+//		  data = dequeue(&buf);
+//	  }
+	  if (get_command_2(command)) {
+		command_length = 16;
+		if (command_length != -1) {
+		  if(execute_command(command)) {
+			printf("NOK\n\r");
+			prompt();
+		  }
+		  else {
+			prompt();
+		  }
+		}
+		else {
+		  printf("NOK\n\r");
+		  prompt();
+		}
 
+	  }
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
+
   }
   /* USER CODE END 3 */
 }
