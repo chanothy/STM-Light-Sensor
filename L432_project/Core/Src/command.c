@@ -5,11 +5,14 @@
 #include <main.h>
 #include <string.h>
 #include <interrupt.h>
+#include <stdlib.h>
 
 void help_command(char *);
 void lof_command(char *);
 void lon_command(char *);
 void test_command(char *);
+void ts_command(char *);
+void ds_command(char *);
 
 void prompt() {
 	printf("> ");
@@ -27,6 +30,8 @@ command_t commands[] = {
 	{"lon",lon_command},
 	{"lof",lof_command},
 	{"test",test_command},
+	{"ts",ts_command},
+	{"ds",ds_command},
 	{0,0}
 };
 
@@ -62,6 +67,57 @@ void __attribute__((weak)) test_command(char *arguments) {
 	}
 }
 
+void __attribute__((weak)) ts_command(char *arguments) {
+	printf("ts_command\n\r");
+	int t[3];
+	if (arguments) {
+		char *pt;
+		pt = strtok(arguments, ",");
+		for (int i = 0; i < 3; i++) {
+			if (pt != NULL) {
+				t[i] = atoi(pt);
+				pt = strtok(NULL, ",");
+			} else {
+				t[i] = pt;
+			}
+		}
+	}
+	if (t[0] && (t[0]>-1) && (t[0]<24) && t[1] && (t[1]>-1) && (t[1]<60) && t[2] && (t[2]>-1) && (t[2]<60)) {
+		printf("OK\n\r");
+		for (int i = 0; i < 3; i++) {
+			printf("t[%d]: %d\n\r", i, t[i]);
+		}
+	}
+	else {
+		printf("NOK\n\r");
+	}
+}
+
+void __attribute__((weak)) ds_command(char *arguments) {
+	printf("ds_command\n\r");
+	int d[3];
+	if (arguments) {
+		char *pt;
+		pt = strtok(arguments, ",");
+		for (int i = 0; i < 3; i++) {
+			if (pt != NULL) {
+				d[i] = atoi(pt);
+				pt = strtok(NULL, ",");
+			} else {
+				d[i] = pt;
+			}
+		}
+	}
+	if (d[0] && (d[0]>0) && (d[0]<13) && d[1] && d[2]) {
+		printf("OK\n\r");
+		for (int i = 0; i < 3; i++) {
+			printf("d[%d]: %d\n\r", i, d[i]);
+		}
+	}
+	else {
+		printf("NOK\n\r");
+	}
+}
 
 enum {COLLECT_CHARS, COMPLETE};
 
