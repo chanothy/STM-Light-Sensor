@@ -1,8 +1,8 @@
-../Core/Src/command.c:12:6:prompt	1
-../Core/Src/command.c:31:28:help_command	1
-../Core/Src/command.c:39:6:test_command	1
-../Core/Src/command.c:43:28:lof_command	1
-../Core/Src/command.c:48:28:lon_command	1
-../Core/Src/command.c:75:5:get_commands	8
-../Core/Src/command.c:121:5:execute_command	7
-../Core/Src/command.c:153:5:parse_command	6
+../Core/Src/command.c:13:6:prompt	1
+../Core/Src/command.c:32:28:help_command	1
+../Core/Src/command.c:40:28:lof_command	1
+../Core/Src/command.c:45:28:lon_command	1
+../Core/Src/command.c:50:28:test_command	1
+../Core/Src/command.c:57:5:get_commands	8
+../Core/Src/command.c:102:5:parse_command	6
+../Core/Src/command.c:124:5:execute_command	7

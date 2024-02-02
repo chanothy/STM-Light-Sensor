@@ -4,6 +4,7 @@
 #include <stm32l4xx_it.h>
 #include <main.h>
 #include <string.h>
+#include <interrupt.h>
 
 void help_command(char *);
 void lof_command(char *);
@@ -36,10 +37,6 @@ void __attribute__((weak)) help_command(char *arguments) {
 	printf("test\n\r");
 }
 
-void test_command(char *arguments) {
-
-}
-
 void __attribute__((weak)) lof_command(char *arguments) {
 	printf("led_off\n\r");
 	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
@@ -50,25 +47,10 @@ void __attribute__((weak)) lon_command(char *arguments) {
 	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
 }
 
-//void get_command(uint8_t *command) {
-//	const char *led_on = "lon";
-//	const char *led_off = "lof";
-//	const char *help = "help";
-//
-//	if (strstr(command,led_on) != NULL) {
-//	  lon_command(0);
-//	}
-//	else if (strstr(command,led_off) != NULL) {
-//	  lof_command(0);
-//	}
-//	else if (strstr(command,help) != NULL) {
-//	  help_command(0);
-//	}
-//	else {
-//	  printf("invalid_command\n\r");
-//	}
-//	prompt();
-//}
+void __attribute__((weak)) test_command(char *arguments) {
+	printf("test_command\n\r");
+}
+
 
 enum {COLLECT_CHARS, COMPLETE};
 
@@ -89,8 +71,7 @@ int get_commands(uint8_t *command_buf) {
         }
       }
       else {
-        putchar(ch); // send the character
-        /* while (!LL_LPUART_IsActiveFlag_TXE(LPUART1)); // wait until the character has been sent.       */
+        putchar(ch);
         command_buf[counter++]=ch;
         if (counter>=(QUEUE_SIZE-2)) {
           mode=COMPLETE;
@@ -116,6 +97,28 @@ int get_commands(uint8_t *command_buf) {
   else {
     return(0);
   }
+}
+
+int parse_command (uint8_t *line, uint8_t **command, uint8_t **args) {
+  uint8_t *p;
+
+  if((!line) ||
+     (!command) ||
+     (!args)) {
+    return (-1);
+  }
+  *command = line;
+  p = line;
+  while (*p!=','){
+    if (!*p) {
+      *args = '\0';
+      return(0);
+    }
+    p++;
+  }
+  *p++ = '\0';
+  *args = p;
+  return (0);
 }
 
 int execute_command(uint8_t * line) { // line is buffer where command is in
@@ -150,25 +153,4 @@ int execute_command(uint8_t * line) { // line is buffer where command is in
   }
 }
 
-int parse_command (uint8_t *line, uint8_t **command, uint8_t **args) {
-  uint8_t *p;
-
-  if((!line) ||
-     (!command) ||
-     (!args)) {
-    return (-1);
-  }
-  *command = line;
-  p = line;
-  while (*p!=','){
-    if (!*p) {
-      *args = '\0';
-      return(0);
-    }
-    p++;
-  }
-  *p++ = '\0';
-  *args = p;
-  return (0);
-}
 

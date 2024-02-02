@@ -26,7 +26,8 @@ Core/Src/command.o: ../Core/Src/command.c \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- ../Core/Inc/queue.h ../Core/Inc/stm32l4xx_it.h ../Core/Inc/main.h
+ ../Core/Inc/queue.h ../Core/Inc/stm32l4xx_it.h ../Core/Inc/main.h \
+ ../Core/Inc/interrupt.h
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_usart.h:
 ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l4xx.h:
 ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l432xx.h:
@@ -57,3 +58,4 @@ Core/Src/command.o: ../Core/Src/command.c \
 ../Core/Inc/queue.h:
 ../Core/Inc/stm32l4xx_it.h:
 ../Core/Inc/main.h:
+../Core/Inc/interrupt.h:
