@@ -13,6 +13,8 @@ void prompt() {
 	printf("> ");
 }
 
+extern queue_t buf;
+
 typedef struct command {
 	char * cmd_string;
 	void (*cmd_function)(char * arg);
@@ -48,7 +50,7 @@ void __attribute__((weak)) lon_command(char *arguments) {
 	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
 }
 
-void get_command(uint8_t command[]) {
+void get_command(uint8_t *command) {
 	const char *led_on = "lon";
 	const char *led_off = "lof";
 	const char *help = "help";
@@ -68,14 +70,62 @@ void get_command(uint8_t command[]) {
 	prompt();
 }
 
-int execute_command(uint8_t * line) {
+enum {COLLECT_CHARS, COMPLETE};
+
+int get_command_2(uint8_t *command_buf) {
+  static uint32_t counter=0;
+  static uint32_t mode = COLLECT_CHARS;
+
+  uint8_t ch = 0;;
+  uint32_t mask;
+
+  ch=dequeue(&buf);
+  while (ch!=0) {
+    if ((ch!='\n')&&(ch!='\r')) {
+      if (ch==0x7f) {               // backspace functionality
+        if (counter > 0) {
+            printf("\b \b");
+            counter--;
+        }
+      }
+      else {
+        putchar(ch); // send the character
+        /* while (!LL_LPUART_IsActiveFlag_TXE(LPUART1)); // wait until the character has been sent.       */
+        command_buf[counter++]=ch;
+        if (counter>=(QUEUE_SIZE-2)) {
+          mode=COMPLETE;
+          break;
+        }
+      }
+    }
+    else {
+      mode = COMPLETE;
+      break;
+    }
+    mask = disable();
+    ch=dequeue(&buf);
+    restore(mask);
+  }
+  if (mode == COMPLETE) {
+    command_buf[counter] = 0;
+    printf("\n\r");
+    counter = 0;
+    mode = COLLECT_CHARS;
+    return(1);
+  }
+  else {
+    return(0);
+  }
+}
+
+int execute_command(uint8_t * line) { // line is buffer where command is in
   uint8_t *cmd;
   uint8_t *arg;
   command_t *p = commands;
   int success = 0;
 
   if (!line) {
-    return (-1); // Passed a bad pointer
+    return (-1);
   }
   if (parse_command(line,&cmd,&arg) == -1) {
     printf("Error with parse command\n\r");

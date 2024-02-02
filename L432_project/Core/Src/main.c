@@ -110,17 +110,34 @@ int main(void)
   prompt();
   while (1)
   {
-	  data = dequeue(&buf);
-	  while (data!=0) {
-		  if (data=='\n'||data=='\r') {
-			  get_command(command);
-			  memset(command, 0, sizeof(command));
-			  counter = 0;
+//	  data = dequeue(&buf);
+//	  while (data!=0) {
+//		  if (get_command_2(command)) {
+//			  get_command(command);
+//			  memset(command, 0, sizeof(command));
+//			  counter = 0;
+//		  }
+//		  command[counter] = data;
+//		  counter++;
+//		  command[counter] = '\0';
+//		  data = dequeue(&buf);
+//	  }
+	  if (get_command(command)) {
+		command_length = 1000;
+		if (command_length != -1) {
+		  if(execute_command(command)) {
+			printf("NOK\n\r");
+			prompt();
 		  }
-		  command[counter] = data;
-		  counter++;
-		  command[counter] = '\0';
-		  data = dequeue(&buf);
+		  else {
+			prompt();
+		  }
+		}
+		else {
+		  printf("NOK\n\r");
+		  prompt();
+		}
+
 	  }
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
