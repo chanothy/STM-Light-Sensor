@@ -110,35 +110,24 @@ int main(void)
   prompt();
   while (1)
   {
-//	  data = dequeue(&buf);
-//	  while (data!=0) {
-//		  if (get_command_2(command)) {
-//			  get_command(command);
-//			  memset(command, 0, sizeof(command));
-//			  counter = 0;
-//		  }
-//		  command[counter] = data;
-//		  counter++;
-//		  command[counter] = '\0';
-//		  data = dequeue(&buf);
-//	  }
-	  if (get_command_2(command)) {
-		command_length = 16;
-		if (command_length != -1) {
-		  if(execute_command(command)) {
-			printf("NOK\n\r");
-			prompt();
+	  if (get_commands(command)) {
+		  command_length = 16;
+		  if (command_length != -1) {
+			  if(execute_command(command)) {
+				  printf("NOK\n\r");
+				  prompt();
+			  }
+			  else {
+				  printf("OK\n\r");
+				  prompt();
+			  }
 		  }
 		  else {
-			prompt();
+			  printf("NOK\n\r");
+			  prompt();
 		  }
-		}
-		else {
-		  printf("NOK\n\r");
-		  prompt();
-		}
 
-	  }
+  }
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
 

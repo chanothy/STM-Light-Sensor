@@ -50,29 +50,29 @@ void __attribute__((weak)) lon_command(char *arguments) {
 	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
 }
 
-void get_command(uint8_t *command) {
-	const char *led_on = "lon";
-	const char *led_off = "lof";
-	const char *help = "help";
-
-	if (strstr(command,led_on) != NULL) {
-	  lon_command(0);
-	}
-	else if (strstr(command,led_off) != NULL) {
-	  lof_command(0);
-	}
-	else if (strstr(command,help) != NULL) {
-	  help_command(0);
-	}
-	else {
-	  printf("invalid_command\n\r");
-	}
-	prompt();
-}
+//void get_command(uint8_t *command) {
+//	const char *led_on = "lon";
+//	const char *led_off = "lof";
+//	const char *help = "help";
+//
+//	if (strstr(command,led_on) != NULL) {
+//	  lon_command(0);
+//	}
+//	else if (strstr(command,led_off) != NULL) {
+//	  lof_command(0);
+//	}
+//	else if (strstr(command,help) != NULL) {
+//	  help_command(0);
+//	}
+//	else {
+//	  printf("invalid_command\n\r");
+//	}
+//	prompt();
+//}
 
 enum {COLLECT_CHARS, COMPLETE};
 
-int get_command_2(uint8_t *command_buf) {
+int get_commands(uint8_t *command_buf) {
   static uint32_t counter=0;
   static uint32_t mode = COLLECT_CHARS;
 

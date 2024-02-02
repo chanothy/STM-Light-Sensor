@@ -3,7 +3,6 @@
 ../Core/Src/command.c:39:6:test_command	1
 ../Core/Src/command.c:43:28:lof_command	1
 ../Core/Src/command.c:48:28:lon_command	1
-../Core/Src/command.c:53:6:get_command	4
-../Core/Src/command.c:75:5:get_command_2	8
+../Core/Src/command.c:75:5:get_commands	8
 ../Core/Src/command.c:121:5:execute_command	7
 ../Core/Src/command.c:153:5:parse_command	6
