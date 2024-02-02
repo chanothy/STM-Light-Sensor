@@ -50,7 +50,7 @@ UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
 queue_t buf;
 uint8_t command[16]; // idk how big to make this
-
+int command_length;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -122,8 +122,8 @@ int main(void)
 //		  command[counter] = '\0';
 //		  data = dequeue(&buf);
 //	  }
-	  if (get_command(command)) {
-		command_length = 1000;
+	  if (get_command_2(command)) {
+		command_length = 16;
 		if (command_length != -1) {
 		  if(execute_command(command)) {
 			printf("NOK\n\r");
