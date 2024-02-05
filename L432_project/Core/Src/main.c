@@ -109,8 +109,8 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   printf("System Up and Running\n\r");
-  static uint32_t counter = 0;
-  uint8_t data;
+
+
   prompt();
   while (1)
   {
@@ -135,6 +135,9 @@ int main(void)
 
 	  if (alarm) {
 		  printf("alarm_triggered\n\r");
+		  lon();
+		  HAL_Delay(100);
+		  lof();
 		  alarm = 0;
 	  }
     /* USER CODE END WHILE */
