@@ -54,12 +54,10 @@ void __attribute__((weak)) help_command(char *arguments) {
 }
 
 void __attribute__((weak)) lof_command(char *arguments) {
-	printf("led_off\n\r");
 	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
 }
 
 void __attribute__((weak)) lon_command(char *arguments) {
-	printf("led_on\n\r");
 	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
 }
 

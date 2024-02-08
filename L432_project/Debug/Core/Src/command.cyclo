@@ -1,10 +1,10 @@
 ../Core/Src/command.c:20:6:prompt	1
 ../Core/Src/command.c:48:28:help_command	1
 ../Core/Src/command.c:56:28:lof_command	1
-../Core/Src/command.c:61:28:lon_command	1
-../Core/Src/command.c:66:28:test_command	3
-../Core/Src/command.c:79:28:ts_command	13
-../Core/Src/command.c:104:28:ds_command	9
-../Core/Src/command.c:130:5:get_commands	8
-../Core/Src/command.c:175:5:parse_command	6
-../Core/Src/command.c:197:5:execute_command	7
+../Core/Src/command.c:60:28:lon_command	1
+../Core/Src/command.c:64:28:test_command	3
+../Core/Src/command.c:77:28:ts_command	13
+../Core/Src/command.c:102:28:ds_command	9
+../Core/Src/command.c:128:5:get_commands	8
+../Core/Src/command.c:173:5:parse_command	6
+../Core/Src/command.c:195:5:execute_command	7
