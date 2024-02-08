@@ -135,9 +135,9 @@ int main(void)
 
 	  if (alarm) {
 		  printf("alarm_triggered\n\r");
-		  lon();
+		  lon_command();
 		  HAL_Delay(100);
-		  lof();
+		  lof_command();
 		  alarm = 0;
 	  }
     /* USER CODE END WHILE */
