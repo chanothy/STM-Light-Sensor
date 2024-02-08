@@ -46,7 +46,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 RTC_HandleTypeDef hrtc;
-
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
@@ -103,14 +102,11 @@ int main(void)
   /* USER CODE BEGIN 2 */
   RetargetInit(&huart2);
   LL_USART_EnableIT_RXNE(USART2);    // Turn on the usart2 interrupt
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   printf("System Up and Running\n\r");
-  static uint32_t counter = 0;
-  uint8_t data;
   prompt();
   while (1)
   {
