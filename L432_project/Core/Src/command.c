@@ -13,6 +13,8 @@ void lon_command(char *);
 void test_command(char *);
 void ts_command(char *);
 void ds_command(char *);
+void tsl237_command(char *);
+
 
 extern RTC_HandleTypeDef hrtc;
 uint32_t format = RTC_FORMAT_BIN;
@@ -41,6 +43,7 @@ command_t commands[] = {
 	{"test",test_command},
 	{"ts",ts_command},
 	{"ds",ds_command},
+	{"tsl237",tsl237_command},
 	{0,0}
 };
 
@@ -121,6 +124,10 @@ void __attribute__((weak)) ds_command(char *arguments) {
 	else {
 		printf("NOK\n\r");
 	}
+}
+
+void __attribute__((weak)) tsl237_command(char *arguments) {
+
 }
 
 enum {COLLECT_CHARS, COMPLETE};
