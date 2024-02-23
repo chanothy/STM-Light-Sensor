@@ -58,7 +58,7 @@ queue_t buf;
 uint8_t command[16]; // idk how big to make this
 int command_length;
 int alarm = 0;
-volatile uint32_t period = 0;
+volatile uint32_t period;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -139,9 +139,10 @@ int main(void)
   prompt();
   while (1)
   {
-//	  printf("Period %d\n\r", period);
-
 	  HAL_Delay(100);
+	  tsl237_clock_period = (1/(float)SystemCoreClock) * (float) period;
+	  tsl237_clock_frequency = 1/tsl237_clock_period;
+
 	  if (get_commands(command)) {
 		  command_length = 16;
 		  if (command_length != -1) {
@@ -161,13 +162,13 @@ int main(void)
 
 	  }
 
-	  if (alarm) {
-		  printf("alarm_triggered\n\r");
-		  lon_command();
-		  HAL_Delay(100);
-		  lof_command();
-		  alarm = 0;
-	  }
+//	  if (alarm) {
+//		  printf("alarm_triggered\n\r");
+//		  lon_command();
+//		  HAL_Delay(100);
+//		  lof_command();
+//		  alarm = 0;
+//	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
