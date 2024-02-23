@@ -30,6 +30,7 @@ void prompt() {
 }
 
 extern queue_t buf;
+extern long period;
 
 typedef struct command {
 	char * cmd_string;
@@ -127,7 +128,7 @@ void __attribute__((weak)) ds_command(char *arguments) {
 }
 
 void __attribute__((weak)) tsl237_command(char *arguments) {
-
+  printf("Period %ld\n\r", .23);
 }
 
 enum {COLLECT_CHARS, COMPLETE};

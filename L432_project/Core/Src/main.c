@@ -58,7 +58,7 @@ queue_t buf;
 uint8_t command[16]; // idk how big to make this
 int command_length;
 int alarm = 0;
-int period = 0;
+long period = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -137,7 +137,7 @@ int main(void)
   prompt();
   while (1)
   {
-	  printf("Period %d\n\r", period);
+//	  printf("Period %d\n\r", period);
 
 	  HAL_Delay(100);
 	  if (get_commands(command)) {
