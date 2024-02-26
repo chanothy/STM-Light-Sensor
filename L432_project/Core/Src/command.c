@@ -31,7 +31,6 @@ void prompt() {
 
 extern queue_t buf;
 extern uint32_t period;
-extern float tsl237_clock_frequency;
 
 typedef struct command {
 	char * cmd_string;
@@ -128,8 +127,13 @@ void __attribute__((weak)) ds_command(char *arguments) {
 	}
 }
 
+extern float tsl237_clock_frequency;
+
 void __attribute__((weak)) tsl237_command(char *arguments) {
-  printf("clock_freq: %f\n\r", tsl237_clock_frequency);
+  int freqInt = tsl237_clock_frequency * 1000;
+  int freqFirst = freqInt / 1000;
+  int freqSecond = freqInt % 1000;
+  printf("%d.%d hz\n\r", freqFirst, freqSecond);
 }
 
 enum {COLLECT_CHARS, COMPLETE};

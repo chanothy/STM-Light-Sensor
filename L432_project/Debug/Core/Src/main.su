@@ -1,6 +1,6 @@
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_usart.h:3672:22:LL_USART_EnableIT_RXNE	40	static,ignoring_inline_asm
-../Core/Src/main.c:77:6:HAL_TIM_IC_CaptureCallback	24	static
-../Core/Src/main.c:97:5:main	24	static
+../Core/Src/main.c:79:6:HAL_TIM_IC_CaptureCallback	24	static
+../Core/Src/main.c:99:5:main	16	static
 ../Core/Src/main.c:184:6:SystemClock_Config	96	static
 ../Core/Src/main.c:247:13:MX_ADC1_Init	32	static
 ../Core/Src/main.c:305:13:MX_RTC_Init	80	static

@@ -59,6 +59,8 @@ uint8_t command[16]; // idk how big to make this
 int command_length;
 int alarm = 0;
 volatile uint32_t period;
+volatile float tsl237_clock_period;
+volatile float tsl237_clock_frequency;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -97,8 +99,6 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  volatile float tsl237_clock_period;
-  volatile float tsl237_clock_frequency;
   init_queue(&buf);
   uint32_t captures[2];
   /* USER CODE END 1 */
