@@ -14,6 +14,10 @@ void test_command(char *);
 void ts_command(char *);
 void ds_command(char *);
 void tsl237_command(char *);
+void temp_command(char *);
+void battery_command(char *);
+
+
 
 
 extern RTC_HandleTypeDef hrtc;
@@ -45,6 +49,8 @@ command_t commands[] = {
 	{"ts",ts_command},
 	{"ds",ds_command},
 	{"tsl237",tsl237_command},
+	{"temp",temp_command},
+	{"battery",battery_command},
 	{0,0}
 };
 
@@ -134,6 +140,19 @@ void __attribute__((weak)) tsl237_command(char *arguments) {
   int freqFirst = freqInt / 1000;
   int freqSecond = freqInt % 1000;
   printf("%d.%d hz\n\r", freqFirst, freqSecond);
+}
+
+extern sensorval_t mySensors;
+
+void __attribute__((weak)) temp_command(char *arguments) {
+	printf("%d C\n\r", mySensors.temperature);
+}
+
+void __attribute__((weak)) battery_command(char *arguments) {
+	int battInt = mySensors.vdda_value;
+	int battFirst = battInt / 1000;
+	int battSecond = battInt % 1000;
+  printf("%d.%d V\n\r", battFirst, battSecond);
 }
 
 enum {COLLECT_CHARS, COMPLETE};

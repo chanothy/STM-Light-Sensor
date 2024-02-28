@@ -10,12 +10,11 @@ int parse_command();
 void lof_command();
 void lon_command();
 void test_command();
+void help_command();
+void ts_command();
+void ds_command();
+void tsl237_command();
+void temp_command();
+void battery_command();
 
-//command_t commands[] = {
-//  {"help",help_command},
-//  {"lof",lof_command},
-//  {"lon",lon_command},
-//  {"test",test_command},
-//  {0,0}
-//};
 

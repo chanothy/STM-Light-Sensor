@@ -36,7 +36,12 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+typedef struct sensorval {
+    uint32_t vdda_value;
+    uint32_t temperature;
+} sensorval_t;
 
+extern sensorval_t mySensors;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -77,5 +82,7 @@ void Error_Handler(void);
 #ifdef __cplusplus
 }
 #endif
+
+
 
 #endif /* __MAIN_H */
