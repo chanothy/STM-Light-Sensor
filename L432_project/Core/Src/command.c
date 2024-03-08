@@ -16,8 +16,7 @@ void ds_command(char *);
 void tsl237_command(char *);
 void temp_command(char *);
 void battery_command(char *);
-
-
+void sample_command(char *);
 
 
 extern RTC_HandleTypeDef hrtc;
@@ -51,6 +50,7 @@ command_t commands[] = {
 	{"tsl237",tsl237_command},
 	{"temp",temp_command},
 	{"battery",battery_command},
+	{"sample",sample_command},
 	{0,0}
 };
 
@@ -61,6 +61,12 @@ void __attribute__((weak)) help_command(char *arguments) {
 	printf("lof\n\r");
 	printf("lon\n\r");
 	printf("test\n\r");
+	printf("ts\n\r");
+	printf("ds\n\r");
+	printf("tsl237\n\r");
+	printf("temp\n\r");
+	printf("battery\n\r");
+	printf("sample\n\r");
 }
 
 void __attribute__((weak)) lof_command(char *arguments) {
@@ -153,6 +159,10 @@ void __attribute__((weak)) battery_command(char *arguments) {
 	int battFirst = battInt / 1000;
 	int battSecond = battInt % 1000;
   printf("%d.%d V\n\r", battFirst, battSecond);
+}
+
+void __attribute__((weak)) sample_command(char *arguments) {
+
 }
 
 enum {COLLECT_CHARS, COMPLETE};
@@ -255,5 +265,7 @@ int execute_command(uint8_t * line) { // line is buffer where command is in
     return (-1);
   }
 }
+
+
 
 
