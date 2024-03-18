@@ -1,3 +1,7 @@
+#define SENTINEL_MARK_BOTTOM      0xDEADBEEFA5A5A5A5
+#define SENTINEL_MARK_TOP         0xFEEDC0DE5A5A5A5A
+
+
 typedef struct sensordata {
   uint8_t watermark;               // 0x01=populated, 0xFF=unpopulated
   uint8_t status;                  // record type, 01=sensor data, 02=log data;
@@ -20,3 +24,18 @@ typedef struct raw {               // Raw structure used to write sensordata and
   uint64_t data0;
   uint64_t data1;
 } raw_t;
+
+typedef struct flash_status {
+  uint64_t * data_start;
+  uint32_t total_records;
+  uint32_t max_possible_records;
+  uint64_t * next_address;
+  uint32_t next_record_number;
+} flash_status_t;
+
+int flash_write_init(flash_status_t *);
+int write_record(flash_status_t *, void *);
+uint64_t *find_sentinel_bottom(void);
+uint64_t *find_sentinel_top(void);
+int write_sentinel(uint64_t *, raw_t *);
+

@@ -1,0 +1,5 @@
+../Core/Src/flash.c:16:5:write_record	24	static
+../Core/Src/flash.c:47:12:find_sentinel_bottom	16	static
+../Core/Src/flash.c:60:12:find_sentinel_top	16	static
+../Core/Src/flash.c:70:5:write_sentinel	16	static
+../Core/Src/flash.c:87:5:flash_write_init	80	static

@@ -151,7 +151,7 @@ void __attribute__((weak)) tsl237_command(char *arguments) {
 extern sensorval_t mySensors;
 
 void __attribute__((weak)) temp_command(char *arguments) {
-	printf("%d C\n\r", mySensors.temperature);
+	printf("%ld C\n\r", mySensors.temperature);
 }
 
 void __attribute__((weak)) battery_command(char *arguments) {
