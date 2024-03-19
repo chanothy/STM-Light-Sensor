@@ -38,4 +38,6 @@ int write_record(flash_status_t *, void *);
 uint64_t *find_sentinel_bottom(void);
 uint64_t *find_sentinel_top(void);
 int write_sentinel(uint64_t *, raw_t *);
+void test();
+void erase_flash();
 

@@ -27,6 +27,7 @@
 #include <stm32l4xx_ll_usart.h>
 #include <queue.h>
 #include <command.h>
+#include <flash.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -159,6 +160,9 @@ int main(void) {
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   printf("System Up and Running\n\r");
+//  erase_flash();
+
+  test();
 
   prompt();
   while (1) {

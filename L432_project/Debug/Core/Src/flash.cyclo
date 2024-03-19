@@ -1,5 +1,7 @@
-../Core/Src/flash.c:16:5:write_record	6
-../Core/Src/flash.c:47:12:find_sentinel_bottom	3
-../Core/Src/flash.c:60:12:find_sentinel_top	2
-../Core/Src/flash.c:70:5:write_sentinel	5
-../Core/Src/flash.c:87:5:flash_write_init	13
+../Core/Src/flash.c:17:6:erase_flash	2
+../Core/Src/flash.c:35:6:test	2
+../Core/Src/flash.c:53:5:write_record	6
+../Core/Src/flash.c:86:11:find_sentinel_bottom	3
+../Core/Src/flash.c:100:11:find_sentinel_top	2
+../Core/Src/flash.c:109:5:write_sentinel	5
+../Core/Src/flash.c:128:5:flash_write_init	13
