@@ -63,6 +63,7 @@ volatile uint32_t period;
 volatile float tsl237_clock_period;
 volatile float tsl237_clock_frequency;
 sensorval_t mySensors;
+flash_status_t fs;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -73,7 +74,6 @@ static void MX_RTC_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_ADC1_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -160,11 +160,9 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	printf("System Up and Running\n\r");
 	flash_erase();
+  flash_write_init(&fs);
 	printf("System Up and Running\n\r");
-
-	//	printf("Startup: %u\n\r", ((sensordata_t*)(0x08020000))->status);
 
 	sensordata_t sensor_data = { .watermark = 0x01, .status = 0x01,
 			.record_number = 4, .timestamp = 0x1234567, .battery_voltage = 33,
@@ -176,8 +174,10 @@ int main(void) {
 	raw_t raw_data = { .data0 = *(uint64_t*) &sensor_data, .data1 =
 			*(uint64_t*) &log_data };
 
-	write_data(&raw_data);
-	printf("Data: %d\n\r", ((sensordata_t*) (0x0803FFF8))->record_number);
+//	write_record(&fs,&raw_data);
+
+
+//	printf("Data: %d\n\r", ((sensordata_t*) (0x0803FFF8))->record_number);
 
 	prompt();
 	while (1) {

@@ -1,5 +1,7 @@
 #define SENTINEL_MARK_BOTTOM      0xDEADBEEFA5A5A5A5
 #define SENTINEL_MARK_TOP         0xFEEDC0DE5A5A5A5A
+#define FLASH_END 0x0803FFF0
+
 
 
 typedef struct sensordata {
