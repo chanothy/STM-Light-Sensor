@@ -3,7 +3,6 @@
 #define FLASH_END 0x0803FFF0
 
 
-
 typedef struct sensordata {
   uint8_t watermark;               // 0x01=populated, 0xFF=unpopulated
   uint8_t status;                  // record type, 01=sensor data, 02=log data;
@@ -36,6 +35,7 @@ typedef struct flash_status {
 } flash_status_t;
 
 int flash_write_init(flash_status_t *);
+int write_sensor_data(flash_status_t *fs);
 int write_record(flash_status_t *, void *);
 uint64_t *find_sentinel_bottom(void);
 uint64_t *find_sentinel_top(void);
@@ -44,4 +44,5 @@ void test();
 int flash_erase(void);
 static uint32_t GetPage(uint32_t Addr);
 static uint32_t GetBank(uint32_t Addr);
+int read_all_records(flash_status_t * fs, int type);
 

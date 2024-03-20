@@ -1,8 +1,0 @@
-../Core/Src/flash.c:17:5:flash_erase	40	static
-../Core/Src/flash.c:56:17:GetPage	24	static
-../Core/Src/flash.c:73:17:GetBank	16	static
-../Core/Src/flash.c:77:5:write_record	24	static
-../Core/Src/flash.c:110:11:find_sentinel_bottom	16	static
-../Core/Src/flash.c:124:11:find_sentinel_top	16	static
-../Core/Src/flash.c:133:5:write_sentinel	16	static
-../Core/Src/flash.c:152:5:flash_write_init	80	static

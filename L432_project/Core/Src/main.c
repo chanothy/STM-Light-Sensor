@@ -156,28 +156,19 @@ int main(void) {
 	LL_USART_EnableIT_RXNE(USART2);    // Turn on the usart2 interrupt
 	HAL_TIM_IC_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t*) captures, 2);
 
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	flash_erase();
-  flash_write_init(&fs);
 	printf("System Up and Running\n\r");
 
-	sensordata_t sensor_data = { .watermark = 0x01, .status = 0x01,
-			.record_number = 4, .timestamp = 0x1234567, .battery_voltage = 33,
-			.temperature = 25, .sensor_period = 100 };
-
-	logdata_t log_data = { .watermark = 0x01, .status = 0x02, .record_number = 2,
-			.timestamp = 0x87654321, .msg = "Hello!" };
-
-	raw_t raw_data = { .data0 = *(uint64_t*) &sensor_data, .data1 =
-			*(uint64_t*) &log_data };
-
-//	write_record(&fs,&raw_data);
-
-
-//	printf("Data: %d\n\r", ((sensordata_t*) (0x0803FFF8))->record_number);
+  flash_write_init(&fs);
+  printf("Flash Total Records: %d\n\r",fs.total_records);
+	write_sensor_data(&fs);
+	read_all_records(&fs,1);
+//	printf("Data: %d\n\r", (((sensordata_t*)(0x0803FFF0))->record_number));
 
 	prompt();
 	while (1) {
