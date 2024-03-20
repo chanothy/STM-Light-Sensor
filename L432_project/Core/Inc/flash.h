@@ -39,5 +39,7 @@ uint64_t *find_sentinel_bottom(void);
 uint64_t *find_sentinel_top(void);
 int write_sentinel(uint64_t *, raw_t *);
 void test();
-void erase_flash();
+int flash_erase(void);
+static uint32_t GetPage(uint32_t Addr);
+static uint32_t GetBank(uint32_t Addr);
 

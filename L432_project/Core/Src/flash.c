@@ -14,40 +14,64 @@ extern flash_status_t fs;
 extern ADC_HandleTypeDef hadc1;
 extern TIM_HandleTypeDef htim2;
 
-void erase_flash() {
-	FLASH_EraseInitTypeDef erase_init;
-	uint32_t error;
+int flash_erase(void) {
+  uint32_t FirstPage = 0, NbOfPages = 0, BankNumber = 0;
+  uint32_t PAGEError = 0;
+  /* __IO uint32_t data32 = 0 , MemoryProgramStatus = 0; */
 
-	HAL_FLASH_Unlock();
+  static FLASH_EraseInitTypeDef EraseInitStruct;
+  uint32_t program_end = ((uint32_t )&__fini_array_end
+                  + (uint32_t)&_edata
+                  - (uint32_t)&_sdata);
+  uint32_t bottom  = (((uint32_t)program_end & ~0x7FF) + 0x800);
+  uint32_t top = FLASH_END;
 
-	erase_init.TypeErase = FLASH_TYPEERASE_MASSERASE;
-	erase_init.Banks = FLASH_BANK_1;
+  HAL_FLASH_Unlock();
+  /* Clear OPTVERR bit set on virgin samples */
+  __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_OPTVERR);
+  /* Get the 1st page to erase */
+  FirstPage = GetPage(bottom);
+  /* Get the number of pages to erase from 1st page */
+  NbOfPages = GetPage(top) - FirstPage + 1;
+  /* Get the bank */
+  BankNumber = GetBank(bottom);
+  /* Fill EraseInit structure*/
+  EraseInitStruct.TypeErase   = FLASH_TYPEERASE_PAGES;
+  EraseInitStruct.Banks       = BankNumber;
+  EraseInitStruct.Page        = FirstPage;
+  EraseInitStruct.NbPages     = NbOfPages;
 
-	if (HAL_FLASHEx_Erase(&erase_init, &error) != HAL_OK) {
-		printf("Error erasing flash memory!\n");
-	} else {
-		printf("Flash memory erased successfully.\n");
-	}
-
-	HAL_FLASH_Lock();
+  /* Note: If an erase operation in Flash memory also concerns data in the data or instruction cache,
+     you have to make sure that these data are rewritten before they are accessed during code
+     execution. If this cannot be done safely, it is recommended to flush the caches by setting the
+     DCRST and ICRST bits in the FLASH_CR register. */
+  if (HAL_FLASHEx_Erase(&EraseInitStruct, &PAGEError) != HAL_OK) {
+    HAL_FLASH_Lock();
+    return (-1);
+  }
+  HAL_FLASH_Lock();
+  return(0);
 }
 
-void test() {
-	uint32_t flash_data_address = 0x0803FFF0;
-	uint64_t data_to_write = 2; // The number 2 to write
+static uint32_t GetPage(uint32_t Addr) {
+  uint32_t page = 0;
 
-	HAL_FLASH_Unlock(); // Unlock flash memory access
+  if (Addr < (FLASH_BASE + FLASH_BANK_SIZE))
+  {
+    /* Bank 1 */
+    page = (Addr - FLASH_BASE) / FLASH_PAGE_SIZE;
+  }
+  else
+  {
+    /* Bank 2 */
+    page = (Addr - (FLASH_BASE + FLASH_BANK_SIZE)) / FLASH_PAGE_SIZE;
+  }
 
-	// Write data to flash memory
-	if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, flash_data_address,
-			data_to_write) != HAL_OK) {
-		// Error handling if writing fails
-		printf("Error writing data to flash memory!\n\r");
-	} else {
-		printf("Data successfully written to flash memory.\n\r");
-	}
+  return page;
+}
 
-	HAL_FLASH_Lock(); // Lock flash memory access
+static uint32_t GetBank(uint32_t Addr) {
+  return FLASH_BANK_1;
 }
 
 int write_record(flash_status_t *fs, void *record) {
