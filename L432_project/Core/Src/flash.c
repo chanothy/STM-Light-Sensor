@@ -232,9 +232,12 @@ int read_all_records(flash_status_t * fs, int type) {
     return (0);
   }
   else {
+	uint8_t ALL_RECORD = 4;
+	uint8_t DATA_RECORD = 1;
+	uint8_t LOG_RECORD = 0;
     while ((p->watermark!=0xFF)&&(p->watermark!=0xa5)) {
       switch (p->status) {
-      case DATA_RECORD:
+      case 1:
         if ((type == DATA_RECORD) || (type == ALL_RECORD)) {
           unpack_time(p->timestamp,&time,&date);
           printf("D,");
@@ -243,81 +246,81 @@ int read_all_records(flash_status_t * fs, int type) {
           printf("%02d:%02d:%02d,",time.Hours,time.Minutes,time.Seconds);
           printf("%d.%03d,",(int) p->battery_voltage/1000,(int) p->battery_voltage%1000);
           printf("%d,",p->temperature);
-          printf("%d,",p->light_data);
-          value = cal_lookup(p->light_data);
+          printf("%d,",p->sensor_period);
+//          value = cal_lookup(p->sensor_period);
           if ((value == 1) ||
               (value == -1)) {
             printf("%d\n\r",value);
           }
           else {
-            value = cal_compensate_magnitude(value);
+//            value = cal_compensate_magnitude(value);
             printf("%d.%02d\n\r",value/100,value%100);
           }
         }
         p--;
         break;
-      case LOG_RECORD:
-        log_length = ((logdata_t *)p)->length;
+      case 0:
+//        log_length = ((logdata_t *)p)->length;
         if ((type == LOG_RECORD) || (type == ALL_RECORD)) {
           unpack_time(p->timestamp,&time,&date);
           printf("L,");
           printf("%d,",p->record_number);
           printf("%02d/%02d/20%02d,",date.Month,date.Date,date.Year);
           printf("%02d:%02d:%02d,",time.Hours,time.Minutes,time.Seconds);
-          if (log_length <= 7) {
-            printf("%s\n\r",((logdata_t *)p)->msg);
-            p--;
-          }
-          else {
-            // Print the first 7 characters in the log record
-            q = ((logdata_t *)p)->msg;
-            count = 7;
-            while (count > 0) {
-              printf("%c",*q);
-              q++;
-              count--;
-            }
-            // Print the remaining exension records.
-            count = log_length - 7; // Account for the first 7 characters
-            p--;                    // point at the next record, type logex_t
-            while (count/16) {
-              q = (uint8_t *) p;
-              for (i=0;i<16;i++) {
-                printf("%c",*q);
-                q++;
-                count--;
-              }
-              p--;
-            }
-            if (count%16) {
-              printf("%s",((logex_t *)p)->msg);
-              /* q = ((logdata_t *)p)->msg; */
-              /* for (i=0;i<(count%16);i++) { */
-              /*   printf("%c",*q); */
-              /*   q++; */
-              /* } */
-              p--;
-            }
-            printf("\n\r");
-            /* p = p - (log_length-7)/16; */
-            /* // Handle the additional partial frame */
-            /* if ((log_length-7)%16) { */
-            /*   p--; */
-            /* } */
-          }
+//          if (log_length <= 7) {
+//            printf("%s\n\r",((logdata_t *)p)->msg);
+//            p--;
+//          }
+//          else {
+//            // Print the first 7 characters in the log record
+//            q = ((logdata_t *)p)->msg;
+//            count = 7;
+//            while (count > 0) {
+//              printf("%c",*q);
+//              q++;
+//              count--;
+//            }
+//            // Print the remaining exension records.
+//            count = log_length - 7; // Account for the first 7 characters
+//            p--;                    // point at the next record, type logex_t
+//            while (count/16) {
+//              q = (uint8_t *) p;
+//              for (i=0;i<16;i++) {
+//                printf("%c",*q);
+//                q++;
+//                count--;
+//              }
+//              p--;
+//            }
+//            if (count%16) {
+//              printf("%s",((logex_t *)p)->msg);
+//              /* q = ((logdata_t *)p)->msg; */
+//              /* for (i=0;i<(count%16);i++) { */
+//              /*   printf("%c",*q); */
+//              /*   q++; */
+//              /* } */
+//              p--;
+//            }
+//            printf("\n\r");
+//            /* p = p - (log_length-7)/16; */
+//            /* // Handle the additional partial frame */
+//            /* if ((log_length-7)%16) { */
+//            /*   p--; */
+//            /* } */
+//          }
         }
-        else {
-          if (log_length < 8) {            // Short Record
-            p--;
-          }
-          else {                           // Long Record
-            p--;                           // Head Log Record
-            p = p - (log_length-7)/16;     // Full Extension Records
-            if ((log_length-7)%16) {       // Partial Extension Record
-              p--;
-            }
-          }
-        }
+//        else {
+//          if (log_length < 8) {            // Short Record
+//            p--;
+//          }
+//          else {                           // Long Record
+//            p--;                           // Head Log Record
+//            p = p - (log_length-7)/16;     // Full Extension Records
+//            if ((log_length-7)%16) {       // Partial Extension Record
+//              p--;
+//            }
+//          }
+//        }
         break;
       default:
         p--;
@@ -327,4 +330,41 @@ int read_all_records(flash_status_t * fs, int type) {
     printf("OK\n\r");
   }
   return(0);
+}
+void  unpack_time(uint32_t timeval, RTC_TimeTypeDef *time, RTC_DateTypeDef *date) {
+  uint32_t temp = timeval;
+
+  // Seconds
+  temp &= 0x3F;
+  time->Seconds = (uint8_t) temp;
+
+  // Minutes
+  temp = timeval;
+  temp >>= 6;
+  temp &= 0x3F;
+  time->Minutes = (uint8_t) temp;
+
+  // Hours
+  temp = timeval;
+  temp >>= 13;
+  temp &= 0x1F;
+  time->Hours = (uint8_t) temp;
+
+  // Year
+  temp = timeval;
+  temp >>= 19;
+  temp &= 0x07;
+  date->Year = (uint8_t) temp + 19;
+
+  // Year
+  temp = timeval;
+  temp >>= 22;
+  temp &= 0x0F;
+  date->Month = (uint8_t) temp;
+
+  // Day
+  temp = timeval;
+  temp >>= 27;
+  temp &= 0x1F;
+  date->Date = (uint8_t) temp;
 }

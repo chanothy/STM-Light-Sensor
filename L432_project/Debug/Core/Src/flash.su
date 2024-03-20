@@ -1,0 +1,11 @@
+../Core/Src/flash.c:17:5:flash_erase	40	static
+../Core/Src/flash.c:55:17:GetPage	24	static
+../Core/Src/flash.c:69:17:GetBank	16	static
+../Core/Src/flash.c:73:5:write_record	24	static
+../Core/Src/flash.c:105:11:find_sentinel_bottom	16	static
+../Core/Src/flash.c:119:11:find_sentinel_top	16	static
+../Core/Src/flash.c:128:5:write_sentinel	16	static
+../Core/Src/flash.c:147:5:flash_write_init	80	static
+../Core/Src/flash.c:200:5:write_sensor_data	72	static
+../Core/Src/flash.c:220:5:read_all_records	56	static
+../Core/Src/flash.c:334:7:unpack_time	32	static
