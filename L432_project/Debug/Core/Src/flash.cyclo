@@ -1,9 +1,8 @@
 ../Core/Src/flash.c:17:5:flash_erase	2
 ../Core/Src/flash.c:56:17:GetPage	4
 ../Core/Src/flash.c:73:17:GetBank	1
-../Core/Src/flash.c:77:6:test	2
-../Core/Src/flash.c:95:5:write_record	6
-../Core/Src/flash.c:128:11:find_sentinel_bottom	3
-../Core/Src/flash.c:142:11:find_sentinel_top	2
-../Core/Src/flash.c:151:5:write_sentinel	5
-../Core/Src/flash.c:170:5:flash_write_init	13
+../Core/Src/flash.c:77:5:write_record	6
+../Core/Src/flash.c:110:11:find_sentinel_bottom	3
+../Core/Src/flash.c:124:11:find_sentinel_top	2
+../Core/Src/flash.c:133:5:write_sentinel	5
+../Core/Src/flash.c:152:5:flash_write_init	13

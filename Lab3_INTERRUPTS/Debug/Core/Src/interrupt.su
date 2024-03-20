@@ -1,3 +1,0 @@
-../Core/Src/interrupt.c:15:10:disable	16	static,ignoring_inline_asm
-../Core/Src/interrupt.c:22:6:restore	24	static,ignoring_inline_asm
-../Core/Src/interrupt.c:26:6:enable	4	static,ignoring_inline_asm
