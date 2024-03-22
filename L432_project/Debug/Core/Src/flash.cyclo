@@ -9,6 +9,6 @@
 ../Core/Src/flash.c:201:5:store_sensor_data	2
 ../Core/Src/flash.c:215:5:write_sensor_data	2
 ../Core/Src/flash.c:235:5:store_log_data	2
-../Core/Src/flash.c:254:5:read_all_records	9
-../Core/Src/flash.c:362:10:pack_time	1
-../Core/Src/flash.c:387:6:unpack_time	1
+../Core/Src/flash.c:255:5:read_all_records	7
+../Core/Src/flash.c:363:10:pack_time	1
+../Core/Src/flash.c:388:6:unpack_time	1

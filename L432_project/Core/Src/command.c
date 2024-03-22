@@ -21,6 +21,8 @@ void sample_command(char *);
 void log_command(char *);
 void data_command(char *);
 void total_records_command(char *);
+void erase_command(char *);
+
 
 extern RTC_HandleTypeDef hrtc;
 uint32_t format = RTC_FORMAT_BIN;
@@ -58,6 +60,7 @@ command_t commands[] = {
 	{"log",log_command},
 	{"data",data_command},
 	{"total",total_records_command},
+	{"ef",erase_command},
 	{0,0}
 };
 
@@ -74,7 +77,7 @@ void __attribute__((weak)) help_command(char *arguments) {
 	printf("temp\n\r");
 	printf("battery\n\r");
 	printf("sample\n\r");
-	printf("tr\n\r");
+	printf("total\n\r");
 }
 
 void __attribute__((weak)) lof_command(char *arguments) {
@@ -171,6 +174,19 @@ void __attribute__((weak)) battery_command(char *arguments) {
 
 void __attribute__((weak)) sample_command(char *arguments) {
 	store_sensor_data(&fs,mySensors.vdda_value,mySensors.temperature,period);
+	if (arguments) {
+			char *pt;
+			pt = strtok (arguments,",");
+			store_log_data(&fs, pt);
+		}
+	else {
+		store_log_data(&fs, "none");
+	}
+}
+
+void __attribute__((weak)) erase_command(char *arguments) {
+	flash_erase();
+  flash_write_init(&fs);
 }
 
 void __attribute__((weak)) total_records_command(char *arguments) {

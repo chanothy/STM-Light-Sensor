@@ -241,7 +241,8 @@ int store_log_data(flash_status_t *fs, char* msg) {
 		.watermark = 0x01,
 		.status = 0x02,
 		.record_number = fs->next_record_number,
-		.timestamp = pack_time(&time, &date)
+		.timestamp = pack_time(&time, &date),
+		.msg = {0,0,0,0,0,0,0}
 	};
 	strncpy((char *) log_data.msg, msg, 8);
 	if (write_record(fs, &log_data)) {
@@ -249,7 +250,7 @@ int store_log_data(flash_status_t *fs, char* msg) {
 	} else {
 		printf("Write success\n\r");
 	}
-	return 1;
+	return 0;
 }
 int read_all_records(flash_status_t *fs, int type) {
 	sensordata_t *p = (sensordata_t*) fs->data_start;
@@ -265,13 +266,12 @@ int read_all_records(flash_status_t *fs, int type) {
 		printf("OK\n\r");
 		return (0);
 	} else {
-		uint8_t ALL_RECORD = 4;
 		uint8_t DATA_RECORD = 1;
 		uint8_t LOG_RECORD = 2;
 		while ((p->watermark != 0xFF)) {
 			switch (p->status) {
 			case 1:
-				if ((type == DATA_RECORD) || (type == ALL_RECORD)) {
+				if ((type == DATA_RECORD)) {
 					unpack_time(p->timestamp, &time, &date);
 					printf("D,");
 					printf("%d,", p->record_number);
@@ -286,13 +286,14 @@ int read_all_records(flash_status_t *fs, int type) {
 				break;
 			case 2:
 //        log_length = ((logdata_t *)p)->length;
-				if ((type == LOG_RECORD) || (type == ALL_RECORD)) {
+				if ((type == LOG_RECORD)) {
+//					p = ;
 					unpack_time(p->timestamp, &time, &date);
 					printf("L,");
 					printf("%d,", p->record_number);
 					printf("%02d/%02d/20%02d,", date.Month, date.Date, date.Year);
 					printf("%02d:%02d:%02d,", time.Hours, time.Minutes, time.Seconds);
-//					printf("%s", p->msg);
+					printf("%s", ((logdata_t*) p)->msg);
 //          if (log_length <= 7) {
 //            printf("%s\n\r",((logdata_t *)p)->msg);
 //            p--;
@@ -354,7 +355,7 @@ int read_all_records(flash_status_t *fs, int type) {
 				printf("NOK\n\r");
 			}
 		}
-		printf("OK\n\r");
+		printf("\n\r");
 	}
 	return (0);
 }
