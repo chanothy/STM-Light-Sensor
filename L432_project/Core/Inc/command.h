@@ -19,5 +19,6 @@ void battery_command();
 void sample_command();
 void log_command();
 void data_command();
+void total_records_command();
 
 
