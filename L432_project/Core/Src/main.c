@@ -165,8 +165,7 @@ int main(void) {
 	printf("System Up and Running\n\r");
 
   flash_write_init(&fs);
-  printf("Flash Total Records: %d\n\r",fs.total_records);
-	write_sensor_data(&fs);
+//	write_sensor_data(&fs);
 //	printf("Data: %d\n\r", (((sensordata_t*)(0x0803FFF0))->record_number));
 
 	prompt();

@@ -35,7 +35,7 @@ typedef struct flash_status {
 } flash_status_t;
 
 int flash_write_init(flash_status_t *);
-int write_sensor_data(flash_status_t *fs);
+int write_sensor_data(flash_status_t *fs); // hardcoded test item
 int write_record(flash_status_t *, void *);
 uint64_t *find_sentinel_bottom(void);
 uint64_t *find_sentinel_top(void);
@@ -45,4 +45,7 @@ int flash_erase(void);
 static uint32_t GetPage(uint32_t Addr);
 static uint32_t GetBank(uint32_t Addr);
 int read_all_records(flash_status_t * fs, int type);
+uint32_t pack_time(RTC_TimeTypeDef *time, RTC_DateTypeDef *date);
+int store_sensor_data(flash_status_t *fs, uint16_t battery_voltage,
+		uint16_t temperature, int light_data);
 
