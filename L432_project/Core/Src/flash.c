@@ -234,7 +234,7 @@ int read_all_records(flash_status_t * fs, int type) {
   else {
 	uint8_t ALL_RECORD = 4;
 	uint8_t DATA_RECORD = 1;
-	uint8_t LOG_RECORD = 0;
+	uint8_t LOG_RECORD = 2;
     while ((p->watermark!=0xFF)&&(p->watermark!=0xa5)) {
       switch (p->status) {
       case 1:
@@ -267,6 +267,7 @@ int read_all_records(flash_status_t * fs, int type) {
           printf("%d,",p->record_number);
           printf("%02d/%02d/20%02d,",date.Month,date.Date,date.Year);
           printf("%02d:%02d:%02d,",time.Hours,time.Minutes,time.Seconds);
+          printf("%s",p->msg);
 //          if (log_length <= 7) {
 //            printf("%s\n\r",((logdata_t *)p)->msg);
 //            p--;

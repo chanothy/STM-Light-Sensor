@@ -17,6 +17,7 @@ void tsl237_command();
 void temp_command();
 void battery_command();
 void sample_command();
-
+void log_command();
+void data_command();
 
 

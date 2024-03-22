@@ -6,6 +6,7 @@
 #include <string.h>
 #include <interrupt.h>
 #include <stdlib.h>
+#include <flash.h>
 
 void help_command(char *);
 void lof_command(char *);
@@ -17,10 +18,12 @@ void tsl237_command(char *);
 void temp_command(char *);
 void battery_command(char *);
 void sample_command(char *);
-
+void log_command(char *);
+void data_command(char *);
 
 extern RTC_HandleTypeDef hrtc;
 uint32_t format = RTC_FORMAT_BIN;
+extern flash_status_t fs;
 
 void prompt() {
 	RTC_DateTypeDef date;
@@ -51,6 +54,8 @@ command_t commands[] = {
 	{"temp",temp_command},
 	{"battery",battery_command},
 	{"sample",sample_command},
+	{"log",log_command},
+	{"data",data_command},
 	{0,0}
 };
 
@@ -163,6 +168,15 @@ void __attribute__((weak)) battery_command(char *arguments) {
 
 void __attribute__((weak)) sample_command(char *arguments) {
 
+}
+
+
+void __attribute__((weak)) data_command(char *arguments) {
+	read_all_records(&fs,1);
+}
+
+void __attribute__((weak)) log_command(char *arguments) {
+	read_all_records(&fs,2);
 }
 
 enum {COLLECT_CHARS, COMPLETE};
