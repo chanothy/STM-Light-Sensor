@@ -164,8 +164,9 @@ int main(void) {
 	flash_erase();
 	printf("System Up and Running\n\r");
 
-  flash_write_init(&fs);
-//	write_sensor_data(&fs);
+    flash_write_init(&fs);
+    printf("Flash Total Records: %d\n\r",fs.total_records);
+	store_log_data(&fs,"reset");
 //	printf("Data: %d\n\r", (((sensordata_t*)(0x0803FFF0))->record_number));
 
 	prompt();
@@ -189,7 +190,6 @@ int main(void) {
 				printf("NOK\n\r");
 				prompt();
 			}
-
 		}
 
 		if (alarm) {

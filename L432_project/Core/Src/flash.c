@@ -199,7 +199,7 @@ int flash_write_init(flash_status_t *fs) {
 }
 
 int store_sensor_data(flash_status_t *fs, uint16_t battery_voltage,
-		uint16_t temperature, int light_data) {
+	uint16_t temperature, int light_data) {
 	RTC_DateTypeDef date;
 	RTC_TimeTypeDef time;
 	HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
@@ -232,6 +232,25 @@ int write_sensor_data(flash_status_t *fs) {
 	printf("%u\n\r", fs->next_address);
 }
 
+int store_log_data(flash_status_t *fs, char* msg) {
+	RTC_DateTypeDef date;
+	RTC_TimeTypeDef time;
+	HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
+	HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
+	logdata_t log_data = {
+		.watermark = 0x01,
+		.status = 0x02,
+		.record_number = fs->next_record_number,
+		.timestamp = pack_time(&time, &date)
+	};
+	strncpy((char *) log_data.msg, msg, 8);
+	if (write_record(fs, &log_data)) {
+		printf("Write failed\n\r");
+	} else {
+		printf("Write success\n\r");
+	}
+	return 1;
+}
 int read_all_records(flash_status_t *fs, int type) {
 	sensordata_t *p = (sensordata_t*) fs->data_start;
 	RTC_TimeTypeDef time;
@@ -265,7 +284,7 @@ int read_all_records(flash_status_t *fs, int type) {
 				}
 				p--;
 				break;
-			case 0:
+			case 2:
 //        log_length = ((logdata_t *)p)->length;
 				if ((type == LOG_RECORD) || (type == ALL_RECORD)) {
 					unpack_time(p->timestamp, &time, &date);
@@ -328,6 +347,7 @@ int read_all_records(flash_status_t *fs, int type) {
 //            }
 //          }
 //        }
+				p--;
 				break;
 			default:
 				p--;
