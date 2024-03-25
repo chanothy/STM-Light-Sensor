@@ -164,10 +164,19 @@ int main(void) {
 	flash_erase();
 	printf("System Up and Running\n\r");
 
-    flash_write_init(&fs);
-    printf("Flash Total Records: %d\n\r",fs.total_records);
-	store_log_data(&fs,"reset");
+  flash_write_init(&fs);
+//  printf("Flash Total Records: %d\n\r",fs.total_records);
 //	printf("Data: %d\n\r", (((sensordata_t*)(0x0803FFF0))->record_number));
+	store_log_data(&fs, "start");
+
+//	if (arguments) {
+//				char *pt;
+//				pt = strtok (arguments,",");
+//				store_log_data(&fs, pt);
+//			}
+//		else {
+//			store_log_data(&fs, "start");
+//		}
 
 	prompt();
 	while (1) {

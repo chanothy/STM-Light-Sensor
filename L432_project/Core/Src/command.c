@@ -22,6 +22,8 @@ void log_command(char *);
 void data_command(char *);
 void total_records_command(char *);
 void erase_command(char *);
+void manual_log_command(char *);
+
 
 
 extern RTC_HandleTypeDef hrtc;
@@ -61,6 +63,7 @@ command_t commands[] = {
 	{"data",data_command},
 	{"total",total_records_command},
 	{"ef",erase_command},
+	{"mlog", manual_log_command},
 	{0,0}
 };
 
@@ -78,6 +81,9 @@ void __attribute__((weak)) help_command(char *arguments) {
 	printf("battery\n\r");
 	printf("sample\n\r");
 	printf("total\n\r");
+	printf("mlog\n\r");
+	printf("log\n\r");
+	printf("data\n\r");
 }
 
 void __attribute__((weak)) lof_command(char *arguments) {
@@ -174,13 +180,16 @@ void __attribute__((weak)) battery_command(char *arguments) {
 
 void __attribute__((weak)) sample_command(char *arguments) {
 	store_sensor_data(&fs,mySensors.vdda_value,mySensors.temperature,period);
+}
+
+void __attribute__((weak)) manual_log_command(char *arguments) {
 	if (arguments) {
-			char *pt;
-			pt = strtok (arguments,",");
-			store_log_data(&fs, pt);
-		}
+		char *pt;
+		pt = strtok (arguments,",");
+		store_log_data(&fs, pt);
+	}
 	else {
-		store_log_data(&fs, "none");
+		store_log_data(&fs, "start");
 	}
 }
 
@@ -188,6 +197,7 @@ void __attribute__((weak)) erase_command(char *arguments) {
 	flash_erase();
   flash_write_init(&fs);
 }
+
 
 void __attribute__((weak)) total_records_command(char *arguments) {
 	printf("Flash Total Records: %d\n\r",fs.total_records);
